@@ -34,9 +34,9 @@ const Page = () => {
       ]
     : [
         ...(isAllTenants ? ["Tenant"] : []),
-        "MailboxUPN",
-        "MailboxDisplayName",
-        "MailboxType",
+        "CalendarUPN",
+        "CalendarDisplayName",
+        "CalendarType",
         "Permissions",
         "MailboxCacheTimestamp",
         "PermissionCacheTimestamp",
@@ -82,27 +82,27 @@ const Page = () => {
     <>
       {currentTenant && currentTenant !== "" ? (
         <CippTablePage
-          key={`mailbox-permissions-${byUser}`}
-          title="Mailbox Permissions Report"
-          apiUrl="/api/ListMailboxPermissions"
-          queryKey={["mailbox-permissions", currentTenant, byUser]}
+          key={`calendar-permissions-${byUser}`}
+          title="Calendar Permissions Report"
+          apiUrl="/api/ListCalendarPermissions"
+          queryKey={["calendar-permissions", currentTenant, byUser]}
           apiData={apiData}
           simpleColumns={columns}
           cardButton={pageActions}
           offCanvas={null}
         />
       ) : (
-        <Alert severity="warning">Please select a tenant to view mailbox permissions.</Alert>
+        <Alert severity="warning">Please select a tenant to view calendar permissions.</Alert>
       )}
       <CippApiDialog
         createDialog={syncDialog}
-        title="Sync Mailbox Permissions Cache"
+        title="Sync Calendar Permissions Cache"
         fields={[]}
         api={{
           type: "GET",
           url: "/api/ExecCIPPDBCache",
-          confirmText: `Run mailbox permissions cache sync for ${currentTenant}? This will update mailbox and permission data immediately.`,
-          relatedQueryKeys: ["mailbox-permissions"],
+          confirmText: `Run calendar permissions cache sync for ${currentTenant}? This will update mailbox and calendar permission data immediately.`,
+          relatedQueryKeys: ["calendar-permissions"],
           data: {
             Name: "Mailboxes",
           },
